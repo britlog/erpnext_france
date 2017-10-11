@@ -1,4 +1,4 @@
-// Copyright (c) 2016, Britlog and contributors
+// Copyright (c) 2017, Britlog and contributors
 // For license information, please see license.txt
 
 frappe.ui.form.on("Fiscal Year Company", "export_fec", function(frm,cdt,cdn) {
@@ -13,7 +13,7 @@ frappe.ui.form.on("Fiscal Year Company", "export_fec", function(frm,cdt,cdn) {
     formData.append("fiscal_year", frm.doc.name);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/api/method/erpnext_customization.fec.export.export_csv');
+    xhr.open("POST", '/api/method/erpnext_france.fec.export.export_csv');
     xhr.setRequestHeader("X-Frappe-CSRF-Token", frappe.csrf_token);
     xhr.responseType = "text";
 
