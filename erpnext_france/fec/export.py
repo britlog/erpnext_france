@@ -14,6 +14,8 @@ import unidecode
 def export_csv(company_name, fiscal_year):
 	"""Export FEC (Fichier des Ecritures Comptables)"""
 
+	# print(company_name)
+	# print(fiscal_year)
 	data = get_result(company_name,fiscal_year)
 	# print(data)
 
@@ -61,8 +63,11 @@ def get_result(company,fiscal_year):
 			sinv.posting_date as sinv_posting_date,
 			pinv.posting_date as pinv_posting_date,
 			jv.posting_date as jv_posting_date,
-			pe.posting_date as pe_posting_date
+			pe.posting_date as pe_posting_date,
+			acc.account_number,
+			acc.account_name
 		from `tabGL Entry` gl
+			inner join `tabAccount` acc on gl.account = acc.name
 			left join `tabCustomer` cust on gl.party = cust.name
 			left join `tabSupplier` supp on gl.party = supp.name
 			left join `tabSales Invoice` sinv on gl.against_voucher = sinv.name
@@ -123,10 +128,10 @@ def get_result_as_list(data, company):
 
 		# 5. Le numéro de compte, dont les trois premiers caractères doivent correspondre à
 		# des chiffres respectant les normes du plan comptable français
-		compte_num = '{:<08d}'.format(int(d.get("account").split("|")[0].strip()))
+		compte_num = '{:<08d}'.format(int(d.get("account_number")))
 
 		# 6. Le libellé de compte, conformément à la nomenclature du plan comptable français
-		compte_lib = unidecode.unidecode(d.get("account")).split("|")[-1].strip()
+		compte_lib = unidecode.unidecode(d.get("account_name"))
 
 		# 7. Le numéro de compte auxiliaire (à blanc si non utilisé)
 		# 8. Le libellé de compte auxiliaire (à blanc si non utilisé)
