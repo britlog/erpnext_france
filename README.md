@@ -9,8 +9,11 @@ App for french localization
 
 ### How To Use
 
-[Journals and FEC](https://www.britlog.com/blog/erpnext/journaux-comptables-et-export-fec)
+The first step is to set the journals :
+[Journals Setting](https://www.britlog.com/blog/erpnext/journaux-comptables)
 
+Then you can export the FEC :
+[FEC Export](https://www.britlog.com/blog/erpnext/fichier-des-ecritures-comptables)
 
 #### License
 
