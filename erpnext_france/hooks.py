@@ -11,6 +11,15 @@ app_color = "#318CE7"
 app_email = "info@britlog.com"
 app_license = "GNU General Public License"
 
+
+# fixtures = ["Custom Field"]
+fixtures = [
+    {
+        "dt": ("Custom Field"),
+        "filters": [["dt", "in", ("Supplier", "Customer")]]
+    }
+]
+
 # Includes in <head>
 # ------------------
 
@@ -95,7 +104,9 @@ doc_events = {
 doctype_js = {
 	"Fiscal Year": ["erpnext_france/custom_scripts/fiscal_year.js"],
 	"Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
-	"Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"]
+	"Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
+	"Customer": ["erpnext_france/custom_scripts/customer.js"],
+	"Supplier": ["erpnext_france/custom_scripts/supplier.js"]
 }
 
 # Scheduled Tasks

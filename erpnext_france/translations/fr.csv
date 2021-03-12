@@ -1,3 +1,15 @@
-TODO,Journal Code,Code Journal
-TODO,Journal Label,Libellé Journal
-DocType: Sales Invoice,Tax ID,Numéro de TVA Intracommunautaire
+erpnext_france,Journal Code,Code Journal
+erpnext_france,Journal Label,Libellé Journal
+erpnext_france,Tax ID,Numéro de TVA Intracommunautaire
+erpnext_france,Accounting Export,Export Comptable
+erpnext_france,Accounting Document,Pièce Comptable
+erpnext_france,From Date,Date de Début
+erpnext_france,To Date,Date de Fin
+erpnext_france,Please select a company,Sélectionnez s'il vous plaît une société
+erpnext_france,Please select an accounting document,Sélectionnez s'il vous plaît une pièce comptable
+erpnext_france,Please enter from date,Entrez s'il vous plaît une date de début
+erpnext_france,Please enter to date,Entrez s'il vous plaît une date de fin
+erpnext_france,Selling Journal Code,Code Journal de Vente
+erpnext_france,Buying Journal Code,Code Journal d'Achat
+erpnext_france,Export File Format,Format du Fichier d'Export
+erpnext_france,Subledger Account,Compte Auxiliaire
