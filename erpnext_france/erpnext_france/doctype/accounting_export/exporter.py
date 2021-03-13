@@ -63,8 +63,8 @@ class DataExporter:
 			left join `tabCustomer` cust on gl.party = cust.name
 			left join `tabPurchase Invoice` pinv on gl.against_voucher = pinv.name
 			left join `tabSales Invoice` sinv on gl.against_voucher = sinv.name
-			where gl.voucher_type = %(voucher_type)s and gl.creation between %(from_date)s and %(to_date)s
-			order by gl.creation""",
+			where gl.voucher_type = %(voucher_type)s and gl.posting_date between %(from_date)s and %(to_date)s
+			order by gl.name""",
 			{"voucher_type": self.accounting_document, "from_date": self.from_date, "to_date": self.to_date},
 			as_dict=True)
 
