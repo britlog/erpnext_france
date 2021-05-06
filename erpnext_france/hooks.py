@@ -106,7 +106,8 @@ doctype_js = {
 	"Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
 	"Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
 	"Customer": ["erpnext_france/custom_scripts/customer.js"],
-	"Supplier": ["erpnext_france/custom_scripts/supplier.js"]
+	"Supplier": ["erpnext_france/custom_scripts/supplier.js"],
+	"Sales Order": ["erpnext_france/custom_scripts/sales_order.js"]
 }
 
 # Scheduled Tasks

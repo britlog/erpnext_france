@@ -13,3 +13,7 @@ erpnext_france,Selling Journal Code,Code Journal de Vente
 erpnext_france,Buying Journal Code,Code Journal d'Achat
 erpnext_france,Export File Format,Format du Fichier d'Export
 erpnext_france,Subledger Account,Compte Auxiliaire
+erpnext_france,Deposit Invoice,Facture d'Acompte
+erpnext_france,Select a payment term to invoice.,Sélectionnez un terme de paiement à facturer.
+erpnext_france,Deposit Print Heading,Intitulé d'Impression Acompte
+erpnext_france,ERPNext France Settings,Paramètres de ERPNext France

@@ -9,6 +9,6 @@ def get_data():
 			"color": "#318CE7",
 			"icon": "octicon octicon-home",
 			"type": "module",
-			"label": _("ERPNext France")
+			"label": "ERPNext France"
 		}
 	]
