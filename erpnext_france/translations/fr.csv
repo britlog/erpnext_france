@@ -17,3 +17,4 @@ erpnext_france,Deposit Invoice,Facture d'Acompte
 erpnext_france,Select a payment term to invoice.,Sélectionnez un terme de paiement à facturer.
 erpnext_france,Deposit Print Heading,Intitulé d'Impression Acompte
 erpnext_france,ERPNext France Settings,Paramètres de ERPNext France
+erpnext_france,Default Payable Account,Compte fournisseur par défaut
