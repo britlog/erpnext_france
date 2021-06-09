@@ -46,7 +46,7 @@ class DataExporter:
 
 		if self.file_format == "SAGE":
 			frappe.response['filename'] = 'EXPORT.TXT'
-			frappe.response['filecontent'] = self.queue.read()
+			frappe.response['filecontent'] = self.queue.getvalue()
 			frappe.response['type'] = 'binary'
 
 	def add_data(self):
