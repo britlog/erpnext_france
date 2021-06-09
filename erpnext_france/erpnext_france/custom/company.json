@@ -138,7 +138,7 @@
    "modified_by": "Administrator", 
    "name": "Company-export_file_format", 
    "no_copy": 0, 
-   "options": "CIEL", 
+   "options": "CIEL\nSAGE",
    "owner": "Administrator", 
    "parent": null, 
    "parentfield": null, 
