@@ -163,7 +163,7 @@ class DataExporter:
 		elif doc.get("party_type") == "Customer":
 			compte_num_aux = format(doc.get("cust_subl_acc") or '')
 
-		libelle = '{}{:<17s}'.format("FACTURE ", doc.get("voucher_no")[:17])
+		libelle = '{}{}'.format("FACTURE ", doc.get("voucher_no"))
 		debit = '{:.2f}'.format(doc.get("debit")).replace(".", ",")
 		credit = '{:.2f}'.format(doc.get("credit")).replace(".", ",")
 
@@ -173,7 +173,6 @@ class DataExporter:
 		else:
 			libelle_compte = format(doc.get("account_name") or '')
 
-		#libelle_compte=''
 
 		row = [journal_code,
 			   ecriture_date,
@@ -181,7 +180,7 @@ class DataExporter:
 			   piece_num,
 			   libelle_compte,
 			   compte_num_aux,
-			   piece_num,
+			   libelle,
 			   debit,
 			   credit,
 			   echeance_date]
