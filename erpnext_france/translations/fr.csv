@@ -23,3 +23,4 @@ erpnext_france,Salutation,Civilité
 erpnext_france,Allow Sales Invoice Creation Without Delivery Note,Autoriser la création de facture sans bon de livraison
 erpnext_france,Allow Sales Invoice Creation Without Sales Order,Autoriser la création de facture sans commandes
 erpnext_france,Type de Référence,Type d’éléments
+erpnext_france,DRAFT,BROUILLON
