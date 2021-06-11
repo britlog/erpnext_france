@@ -10,6 +10,7 @@ import frappe.permissions
 import csv
 from frappe.utils.csvutils import UnicodeWriter
 from frappe.utils import format_datetime
+from six import StringIO
 
 @frappe.whitelist()
 def export_data(company=None, accounting_document=None, from_date=None, to_date=None):
@@ -26,7 +27,12 @@ class DataExporter:
 		self.file_format = frappe.db.get_value("Company", self.company, "export_file_format")
 
 	def build_response(self):
-		self.writer = UnicodeWriter(quoting=csv.QUOTE_NONE)
+		if self.file_format == "CIEL":
+			self.writer = UnicodeWriter(quoting=csv.QUOTE_NONE)
+
+		if self.file_format == "SAGE":
+			self.queue = StringIO()
+			self.writer = csv.writer(self.queue, delimiter=';')
 
 		self.add_data()
 		if not self.data:
@@ -36,6 +42,11 @@ class DataExporter:
 		if self.file_format == "CIEL":
 			frappe.response['filename'] = 'XIMPORT.TXT'
 			frappe.response['filecontent'] = self.writer.getvalue()
+			frappe.response['type'] = 'binary'
+
+		if self.file_format == "SAGE":
+			frappe.response['filename'] = 'EXPORT.TXT'
+			frappe.response['filecontent'] = self.queue.getvalue()
 			frappe.response['type'] = 'binary'
 
 	def add_data(self):
@@ -83,8 +94,12 @@ class DataExporter:
 			row = []
 			if self.file_format == "CIEL":
 				row = self.add_row_ciel(doc)
+				self.writer.writerow([row])
 
-			self.writer.writerow([row])
+			if self.file_format == "SAGE":
+				row = self.add_row_sage(doc)
+				self.writer.writerow(row)
+
 
 	def add_row_ciel(self, doc):
 
@@ -126,5 +141,50 @@ class DataExporter:
 			   libelle, montant, credit_debit, numero_pointage, code_analytic, libelle_compte, euro]
 
 		return ''.join(row)
+
+	def add_row_sage(self, doc):
+
+		journal_code = self.journal_code
+		ecriture_date = format_datetime(doc.get("posting_date"), "ddMMyy")
+
+		if doc.get("against_voucher_type") == "Purchase Invoice":
+			echeance_date = format_datetime(doc.get("pinv_due_date"), "ddMMyy")
+		elif doc.get("against_voucher_type") == "Sales Invoice":
+			echeance_date = format_datetime(doc.get("sinv_due_date"), "ddMMyy")
+		else:
+			echeance_date = ''
+
+		piece_num = doc.get("voucher_no")
+		compte_num = doc.get("account_number")
+
+		compte_num_aux = ''
+		if doc.get("party_type") == "Supplier":
+			compte_num_aux = format(doc.get("supp_subl_acc") or '')
+		elif doc.get("party_type") == "Customer":
+			compte_num_aux = format(doc.get("cust_subl_acc") or '')
+
+		libelle = '{}{}'.format("FACTURE ", doc.get("voucher_no"))
+		debit = '{:.2f}'.format(doc.get("debit")).replace(".", ",")
+		credit = '{:.2f}'.format(doc.get("credit")).replace(".", ",")
+
+
+		if doc.get("party_type") in ("Supplier", "Customer"):
+			libelle_compte = format(doc.get("party") or '')
+		else:
+			libelle_compte = format(doc.get("account_name") or '')
+
+
+		row = [journal_code,
+			   ecriture_date,
+			   compte_num,
+			   piece_num,
+			   libelle_compte,
+			   compte_num_aux,
+			   libelle,
+			   debit,
+			   credit,
+			   echeance_date]
+
+		return row
 
 
