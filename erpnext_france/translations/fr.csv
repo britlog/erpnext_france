@@ -25,3 +25,4 @@ erpnext_france,Allow Sales Invoice Creation Without Sales Order,Autoriser la cr�
 erpnext_france,Type de Référence,Type d’éléments
 erpnext_france,DRAFT,BROUILLON
 erpnext_france,Purchase Order,Commande d'Achat
+erpnext_france,Terminé par,Date d'échéance
