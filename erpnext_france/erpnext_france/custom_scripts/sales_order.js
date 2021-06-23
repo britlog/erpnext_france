@@ -30,7 +30,7 @@ frappe.ui.form.on('Sales Order', {
 					},
 					"Facture d'Acompte"
 				)
-			})
+			}, __('Create'))
 		}
     }
 });
