@@ -154,7 +154,7 @@ class DataExporter:
 		else:
 			echeance_date = ''
 
-		piece_num = doc.get("voucher_no")
+		piece_num = '{:.17s}'.format(doc.get("voucher_no"))
 		compte_num = doc.get("account_number")
 
 		compte_num_aux = ''
@@ -163,7 +163,7 @@ class DataExporter:
 		elif doc.get("party_type") == "Customer":
 			compte_num_aux = format(doc.get("cust_subl_acc") or '')
 
-		libelle = '{}{}'.format("FACTURE ", doc.get("voucher_no"))
+		libelle = '{}{:.49s}'.format("FACTURE ", doc.get("voucher_no"))
 		debit = '{:.2f}'.format(doc.get("debit")).replace(".", ",")
 		credit = '{:.2f}'.format(doc.get("credit")).replace(".", ",")
 
