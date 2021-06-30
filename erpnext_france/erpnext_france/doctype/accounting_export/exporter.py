@@ -169,9 +169,9 @@ class DataExporter:
 
 
 		if doc.get("party_type") in ("Supplier", "Customer"):
-			libelle_compte = format(doc.get("party") or '')
+			libelle_compte = '{:.17s}'.format(format(doc.get("party") or ''));
 		else:
-			libelle_compte = format(doc.get("account_name") or '')
+			libelle_compte = '{:.17s}'.format(format(doc.get("account_name") or ''));
 
 
 		row = [journal_code,
