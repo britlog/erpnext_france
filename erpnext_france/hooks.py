@@ -17,7 +17,10 @@ fixtures = [
     {
         "dt": ("Custom Field"),
         "filters": [["dt", "in", ("Supplier", "Customer")]]
-    }
+    },
+	{
+		"dt": ("Address Template")
+	}
 ]
 
 # Includes in <head>
