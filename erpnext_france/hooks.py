@@ -16,7 +16,12 @@ app_license = "GNU General Public License"
 fixtures = [
     {
         "dt": ("Custom Field"),
-        "filters": [["dt", "in", ("Supplier", "Customer")]]
+        "filters": [["name", "in", ("Supplier-subledger_account",
+									"Customer-subledger_account",
+									"Customer-siret",
+									"Customer-siren",
+									"Customer-naf",
+									"Customer-incoterm")]]
     },
 	{
 		"dt": ("Address Template")
@@ -145,4 +150,3 @@ doctype_js = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "erpnext_france.event.get_events"
 # }
-
