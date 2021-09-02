@@ -70,7 +70,8 @@ class DataExporter:
 				cust.customer_name,
 				pinv.due_date as pinv_due_date,
 				pinv.bill_no,
-				sinv.due_date as sinv_due_date 
+				sinv.due_date as sinv_due_date,
+				sinv.po_no as sinv_po_no
 			from `tabGL Entry` gl
 			inner join `tabAccount` acc on gl.account = acc.name
 			left join `tabAccount` against_acc on gl.against = against_acc.name
@@ -101,6 +102,7 @@ class DataExporter:
 
 		if self.file_format == "SAGE":
 			supplier_invoice_number = {}
+			customer_invoice_number = {}
 			supplier_invoice_supplier_name = {}
 			customer_invoice_customer_name = {}
 
@@ -111,14 +113,20 @@ class DataExporter:
 					if doc.voucher_no not in supplier_invoice_number:
 						supplier_invoice_number[doc.voucher_no] = doc.bill_no
 
-				if doc.against_voucher_type == 'Sales Invoice' and doc.voucher_no not in customer_invoice_customer_name:
-					customer_invoice_customer_name[doc.voucher_no] = doc.customer_name
+				if doc.against_voucher_type == 'Sales Invoice':
+					if doc.voucher_no not in customer_invoice_customer_name:
+						customer_invoice_customer_name[doc.voucher_no] = doc.customer_name
+					if doc.voucher_no not in customer_invoice_number:
+						customer_invoice_number[doc.voucher_no] = doc.sinv_po_no
 
 			for doc in self.data:
 				doc.invoice_number = doc.voucher_no
 
 				if doc.voucher_no in supplier_invoice_number:
 					doc.invoice_number = supplier_invoice_number[doc.voucher_no]
+					
+				if doc.voucher_no in customer_invoice_number:
+					doc.invoice_number = customer_invoice_number[doc.voucher_no]
 
 				if doc.voucher_no in supplier_invoice_supplier_name:
 					doc.party = supplier_invoice_supplier_name[doc.voucher_no]
@@ -173,7 +181,7 @@ class DataExporter:
 
 	def add_row_sage(self, doc):
 
-		print(doc)
+		# print(doc)
 		journal_code = self.journal_code
 		ecriture_date = format_datetime(doc.get("posting_date"), "ddMMyy")
 
@@ -186,6 +194,7 @@ class DataExporter:
 
 		piece_num = '{:.17s}'.format(doc.get("invoice_number"))
 		compte_num = doc.get("account_number")
+		ref_inv = '{:.13s}'.format(doc.get("voucher_no"))
 
 		compte_num_aux = ''
 		if doc.get("party_type") == "Supplier":
@@ -193,7 +202,7 @@ class DataExporter:
 		elif doc.get("party_type") == "Customer":
 			compte_num_aux = format(doc.get("cust_subl_acc") or '')
 
-		libelle = '{}{:.49s}'.format("FACTURE ", doc.get("party"))
+		libelle = '{}{:.49s}'.format("FACT ", doc.get("party"))
 		debit = '{:.2f}'.format(doc.get("debit")).replace(".", ",")
 		credit = '{:.2f}'.format(doc.get("credit")).replace(".", ",")
 
@@ -207,9 +216,9 @@ class DataExporter:
 		row = [journal_code,
 			   ecriture_date,
 			   compte_num,
+			   ref_inv,
+			   ref_inv,
 			   piece_num,
-			   piece_num,
-			   libelle_compte,
 			   compte_num_aux,
 			   libelle,
 			   debit,
