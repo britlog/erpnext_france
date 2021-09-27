@@ -8,7 +8,7 @@
   "accounting_document",
   "from_date",
   "to_date",
-  "set_export_date",
+  "export_date",
   "included_already_exported_document"
  ],
  "fields": [
@@ -43,21 +43,22 @@
    "reqd": 1
   },
   {
-   "default": "Now",
-   "fieldname": "set_export_date",
-   "fieldtype": "Date",
-   "label": "Set Export Date"
-  },
-  {
    "default": "0",
    "fieldname": "included_already_exported_document",
    "fieldtype": "Check",
    "label": "Included already exported document"
+  },
+  {
+   "default": "Now",
+   "description": "Set empty to not update \"Exported Date\" on document",
+   "fieldname": "export_date",
+   "fieldtype": "Datetime",
+   "label": "Export Date"
   }
  ],
  "hide_toolbar": 1,
  "issingle": 1,
- "modified": "2021-09-27 15:43:15.200530",
+ "modified": "2021-09-27 19:48:21.436805",
  "modified_by": "Administrator",
  "module": "ERPNext France",
  "name": "Accounting Export",

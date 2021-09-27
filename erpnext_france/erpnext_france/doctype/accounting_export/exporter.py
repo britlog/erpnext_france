@@ -35,6 +35,7 @@ class DataExporter:
         self.file_format = frappe.db.get_value("Company", self.company, "export_file_format")
 
     def build_response(self):
+
         if self.file_format == "CIEL":
             self.writer = UnicodeWriter(quoting=csv.QUOTE_NONE)
 
@@ -43,8 +44,9 @@ class DataExporter:
             self.writer = csv.writer(self.queue, delimiter=';')
 
         self.add_data()
-        if not self.data:
+        if not self.data or len(self.data) == 0:
             frappe.respond_as_web_page(_('No Data'), _('There is no data to be exported'), indicator_color='orange')
+            return
 
         # write out response
         if self.file_format == "CIEL":
@@ -58,6 +60,31 @@ class DataExporter:
             frappe.response['type'] = 'binary'
 
     def add_data(self):
+
+        def _set_export_date(doc_type=None, voucher_no=None, export_date=None):
+            if export_date is not None and export_date != 'undefined' and doc_type is not None and voucher_no is not None:
+                invoice = frappe.get_doc(doc_type, voucher_no)
+                if invoice is not None:
+                    invoice.accounting_export_date = export_date
+                    invoice.save()
+
+        sql_already_exported = ""
+
+        # get journal code and export date
+        if self.accounting_document == "Purchase Invoice":
+            self.journal_code = frappe.db.get_value("Company", self.company, "buying_journal_code")
+            fields_inv = ", pinv.due_date as due_date, pinv.bill_no as orign_no "
+            join_table = " inner join `tabPurchase Invoice` pinv on gl.against_voucher = pinv.name "
+            if self.included_already_exported_document == '0':
+                sql_already_exported = " and pinv.accounting_export_date IS NULL "
+        elif self.accounting_document == "Sales Invoice":
+            self.journal_code = frappe.db.get_value("Company", self.company, "selling_journal_code")
+            fields_inv = ",sinv.due_date as due_date, sinv.po_no as orign_no"
+            join_table = " inner join `tabSales Invoice` sinv on gl.against_voucher = sinv.name "
+            if self.included_already_exported_document == '0':
+                sql_already_exported = " and sinv.accounting_export_date IS NULL"
+        else:
+            self.journal_code = ""
 
         # get permitted data only
         self.data = frappe.db.sql("""
@@ -75,41 +102,32 @@ class DataExporter:
 				supp.subledger_account as supp_subl_acc,
 				supp.supplier_name,
 				cust.subledger_account as cust_subl_acc,
-				cust.customer_name,
-				pinv.due_date as pinv_due_date,
-				pinv.bill_no,
-				sinv.due_date as sinv_due_date,
-				sinv.po_no as sinv_po_no
+				cust.customer_name
+				{fields_inv}
 			from `tabGL Entry` gl
 			inner join `tabAccount` acc on gl.account = acc.name
 			left join `tabAccount` against_acc on gl.against = against_acc.name
 			left join `tabSupplier` supp on gl.party = supp.name
 			left join `tabCustomer` cust on gl.party = cust.name
-			left join `tabPurchase Invoice` pinv on gl.against_voucher = pinv.name
-			left join `tabSales Invoice` sinv on gl.against_voucher = sinv.name
+			{join_table}
 			where gl.voucher_type = %(voucher_type)s and gl.posting_date between %(from_date)s and %(to_date)s
 			and acc.account_type not in ("Bank", "Cash") and ifnull(against_acc.account_type, "") not in ("Bank", "Cash")
-			order by gl.voucher_no""",
+			{sql_already_exported}
+            order by gl.voucher_no""".format(sql_already_exported=sql_already_exported, fields_inv=fields_inv,
+                                             join_table=join_table),
                                   {"voucher_type": self.accounting_document, "from_date": self.from_date,
                                    "to_date": self.to_date},
                                   as_dict=True)
 
-        # get journal code
-        if self.accounting_document == "Purchase Invoice":
-            self.journal_code = frappe.db.get_value("Company", self.company, "buying_journal_code")
-        elif self.accounting_document == "Sales Invoice":
-            self.journal_code = frappe.db.get_value("Company", self.company, "selling_journal_code")
-        else:
-            self.journal_code = ""
-
         # format row
         if self.file_format == "CIEL":
             for doc in self.data:
-                row = []
                 row = self.add_row_ciel(doc)
+                _set_export_date(self.accounting_document, doc.voucher_no, self.export_date)
                 self.writer.writerow([row])
 
         if self.file_format == "SAGE":
+
             supplier_invoice_number = {}
             customer_invoice_number = {}
             supplier_invoice_supplier_name = {}
@@ -120,13 +138,13 @@ class DataExporter:
                     if doc.voucher_no not in supplier_invoice_supplier_name:
                         supplier_invoice_supplier_name[doc.voucher_no] = doc.supplier_name
                     if doc.voucher_no not in supplier_invoice_number:
-                        supplier_invoice_number[doc.voucher_no] = doc.bill_no
+                        supplier_invoice_number[doc.voucher_no] = doc.orign_no
 
                 if doc.against_voucher_type == 'Sales Invoice':
                     if doc.voucher_no not in customer_invoice_customer_name:
                         customer_invoice_customer_name[doc.voucher_no] = doc.customer_name
                     if doc.voucher_no not in customer_invoice_number:
-                        customer_invoice_number[doc.voucher_no] = doc.sinv_po_no
+                        customer_invoice_number[doc.voucher_no] = doc.orign_no
 
             for doc in self.data:
                 doc.invoice_number = doc.voucher_no
@@ -144,6 +162,7 @@ class DataExporter:
                     doc.party = customer_invoice_customer_name[doc.voucher_no]
 
                 row = self.add_row_sage(doc)
+                _set_export_date(self.accounting_document, doc.voucher_no, self.export_date)
                 self.writer.writerow(row)
 
     def add_row_ciel(self, doc):
@@ -153,9 +172,9 @@ class DataExporter:
         ecriture_date = format_datetime(doc.get("posting_date"), "yyyyMMdd")
 
         if doc.get("against_voucher_type") == "Purchase Invoice":
-            echeance_date = format_datetime(doc.get("pinv_due_date"), "yyyyMMdd")
+            echeance_date = format_datetime(doc.get("due_date"), "yyyyMMdd")
         elif doc.get("against_voucher_type") == "Sales Invoice":
-            echeance_date = format_datetime(doc.get("sinv_due_date"), "yyyyMMdd")
+            echeance_date = format_datetime(doc.get("due_date"), "yyyyMMdd")
         else:
             echeance_date = '{:<8s}'.format("")
 
@@ -194,16 +213,16 @@ class DataExporter:
         ecriture_date = format_datetime(doc.get("posting_date"), "ddMMyy")
 
         if doc.get("against_voucher_type") == "Purchase Invoice":
-            echeance_date = format_datetime(doc.get("pinv_due_date"), "ddMMyy")
+            echeance_date = format_datetime(doc.get("due_date"), "ddMMyy")
         elif doc.get("against_voucher_type") == "Sales Invoice":
-            echeance_date = format_datetime(doc.get("sinv_due_date"), "ddMMyy")
+            echeance_date = format_datetime(doc.get("due_date"), "ddMMyy")
         else:
             echeance_date = ''
 
-        piece_num = '{:.17s}'.format(doc.get("invoice_number"))
+        piece_num = '{:.17s}'.format(doc.get("invoice_number").replace("\n", " ").replace("\r", " "))
         compte_num = doc.get("account_number")
         ref_inv = '{:.13s}'.format(doc.get("voucher_no"))
-
+        ref_inv_inv = ref_inv
         compte_num_aux = ''
         if doc.get("party_type") == "Supplier":
             compte_num_aux = format(doc.get("supp_subl_acc") or '')
@@ -219,11 +238,15 @@ class DataExporter:
         else:
             libelle_compte = '{:.17s}'.format(format(doc.get("account_name") or ''));
 
+        if doc.get("against_voucher_type") == "Purchase Invoice":
+            ref_inv_inv = piece_num
+            piece_num = ref_inv
+
         row = [journal_code,
                ecriture_date,
                compte_num,
                ref_inv,
-               ref_inv,
+               ref_inv_inv,
                piece_num,
                compte_num_aux,
                libelle,

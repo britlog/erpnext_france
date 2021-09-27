@@ -7,6 +7,9 @@ frappe.ui.form.on('Accounting Export', {
         frm.page.set_primary_action('Export', () => {
             can_export(frm) ? export_data(frm) : null;
         });
+        if (frm.doc.export_date == undefined) {
+            frm.set_value('export_date', new Date());
+        }
     }
 });
 
@@ -15,8 +18,6 @@ const can_export = frm => {
     const accounting_document = frm.doc.accounting_document;
     const from_date = frm.doc.from_date;
     const to_date = frm.doc.to_date;
-    const export_date = frm.doc.set_export_date;
-    const included_already_exported_document = frm.doc.included_already_exported_document;
 
     let is_valid_form = false;
     if (!company) {
@@ -41,7 +42,7 @@ const export_data = frm => {
             accounting_document: frm.doc.accounting_document,
             from_date: frm.doc.from_date,
             to_date: frm.doc.to_date,
-            export_date: frm.doc.to_date,
+            export_date: frm.doc.export_date,
             included_already_exported_document: frm.doc.included_already_exported_document,
         };
     };
