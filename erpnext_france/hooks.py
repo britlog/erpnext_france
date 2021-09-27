@@ -21,7 +21,24 @@ fixtures = [
                                     "Customer-naf",
                                     "Customer-incoterm",
                                     "Sales Invoice-accounting_export_date",
-                                    "Purchase Invoice-accounting_export_date")]]
+                                    "Purchase Invoice-accounting_export_date",
+                                    "Company-accounting_export",
+                                    "Company-export_file_format",
+                                    "Company-buying_journal_code",
+                                    "Company-selling_journal_code",
+                                    "Company-siret",
+                                    "Fiscal Year Company-export_fec",
+                                    "Mode of Payment Account-journal_label",
+                                    "Mode of Payment Account-journal_code")],
+                    ]
+    },
+    {
+        "dt": ("Property Setter"),
+        "or_filters": [
+            ["name", "in",
+             ('Fiscal Year Company-read_only_onload',
+              'Mode of Payment Account-read_only_onload')]
+        ]
     },
     {
         "dt": ("Address Template")
