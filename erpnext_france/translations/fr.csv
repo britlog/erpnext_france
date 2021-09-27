@@ -28,7 +28,7 @@ erpnext_france,Purchase Order,Commande d'Achat
 erpnext_france,Terminé par,Date d'échéance
 erpnext_france,Default Company Bank Account,Compte bancaire par défaut
 erpnext_france,Purchase demande,Demande d'achat
-erpnext_france,Set Export Date,Enregistré la date d'export
+erpnext_france,Set Export Date,Enregistrer la date d'export
 erpnext_france,Included already exported document,Inclure dans l'export les enregistrements déja exporté dans l'export
 erpnext_france,Accounting Export Date,Date d'export en comptabilité
 erpnext_france,Set empty to not update "Exported Date" on document,Mettre à vide pour ne pas mettre de date d'export sur les documents
