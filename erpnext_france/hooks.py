@@ -27,9 +27,10 @@ fixtures = [
                                     "Company-buying_journal_code",
                                     "Company-selling_journal_code",
                                     "Company-siret",
+                                    "Company-discount_supplier_account",
                                     "Fiscal Year Company-export_fec",
                                     "Mode of Payment Account-journal_label",
-                                    "Mode of Payment Account-journal_code")],
+                                    "Mode of Payment Account-discount_supplier_account")],
                     ]
     },
     {
@@ -64,6 +65,15 @@ fixtures = [
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
+doctype_js = {
+    "Fiscal Year": ["erpnext_france/custom_scripts/fiscal_year.js"],
+    "Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
+    "Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
+    "Customer": ["erpnext_france/custom_scripts/customer.js"],
+    "Supplier": ["erpnext_france/custom_scripts/supplier.js"],
+    "Sales Order": ["erpnext_france/custom_scripts/sales_order.js"],
+    "Company": ["erpnext_france/custom_scripts/company.js"]
+}
 
 # Home Pages
 # ----------
@@ -124,15 +134,10 @@ fixtures = [
 doc_events = {
     "Period Closing Voucher": {
         "autoname": "erpnext_france.fec.period_closing_voucher.autoname"
-    }
-}
-doctype_js = {
-    "Fiscal Year": ["erpnext_france/custom_scripts/fiscal_year.js"],
-    "Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
-    "Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
-    "Customer": ["erpnext_france/custom_scripts/customer.js"],
-    "Supplier": ["erpnext_france/custom_scripts/supplier.js"],
-    "Sales Order": ["erpnext_france/custom_scripts/sales_order.js"]
+    },
+    "Purchase Invoice": {
+        "on_submit": "erpnext_france.erpnext_france.custom_scripts_py.purchase_invoice.correct_gl_entry_supplier_discount"
+    },
 }
 
 # Scheduled Tasks
