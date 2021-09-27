@@ -34,7 +34,7 @@ fixtures = [
     },
     {
         "dt": ("Property Setter"),
-        "or_filters": [
+        "filters": [
             ["name", "in",
              ('Fiscal Year Company-read_only_onload',
               'Mode of Payment Account-read_only_onload')]
