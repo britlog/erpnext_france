@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from . import __version__ as app_version
 
 app_name = "erpnext_france"
 app_title = "ERPNext France"
@@ -11,21 +10,22 @@ app_color = "#318CE7"
 app_email = "info@britlog.com"
 app_license = "GNU General Public License"
 
-
 # fixtures = ["Custom Field"]
 fixtures = [
     {
         "dt": ("Custom Field"),
         "filters": [["name", "in", ("Supplier-subledger_account",
-									"Customer-subledger_account",
-									"Customer-siret",
-									"Customer-siren",
-									"Customer-naf",
-									"Customer-incoterm")]]
+                                    "Customer-subledger_account",
+                                    "Customer-siret",
+                                    "Customer-siren",
+                                    "Customer-naf",
+                                    "Customer-incoterm",
+                                    "Sales Invoice-accounting_export_date",
+                                    "Purchase Invoice-accounting_export_date")]]
     },
-	{
-		"dt": ("Address Template")
-	}
+    {
+        "dt": ("Address Template")
+    }
 ]
 
 # Includes in <head>
@@ -105,17 +105,17 @@ fixtures = [
 # }
 
 doc_events = {
-	"Period Closing Voucher": {
-		"autoname": "erpnext_france.fec.period_closing_voucher.autoname"
-	}
+    "Period Closing Voucher": {
+        "autoname": "erpnext_france.fec.period_closing_voucher.autoname"
+    }
 }
 doctype_js = {
-	"Fiscal Year": ["erpnext_france/custom_scripts/fiscal_year.js"],
-	"Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
-	"Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
-	"Customer": ["erpnext_france/custom_scripts/customer.js"],
-	"Supplier": ["erpnext_france/custom_scripts/supplier.js"],
-	"Sales Order": ["erpnext_france/custom_scripts/sales_order.js"]
+    "Fiscal Year": ["erpnext_france/custom_scripts/fiscal_year.js"],
+    "Payment Entry": ["erpnext_france/custom_scripts/payment_entry.js"],
+    "Journal Entry": ["erpnext_france/custom_scripts/journal_entry.js"],
+    "Customer": ["erpnext_france/custom_scripts/customer.js"],
+    "Supplier": ["erpnext_france/custom_scripts/supplier.js"],
+    "Sales Order": ["erpnext_france/custom_scripts/sales_order.js"]
 }
 
 # Scheduled Tasks
