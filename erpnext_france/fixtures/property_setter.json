@@ -1,0 +1,34 @@
+[
+ {
+  "default_value": null,
+  "doc_type": "Fiscal Year Company",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "modified": "2017-09-10 18:38:22.339926",
+  "name": "Fiscal Year Company-read_only_onload",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "read_only_onload",
+  "property_type": "Check",
+  "value": null
+ },
+ {
+  "default_value": null,
+  "doc_type": "Mode of Payment Account",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "modified": "2017-09-17 10:37:48.907511",
+  "name": "Mode of Payment Account-read_only_onload",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "read_only_onload",
+  "property_type": "Check",
+  "value": null
+ }
+]
