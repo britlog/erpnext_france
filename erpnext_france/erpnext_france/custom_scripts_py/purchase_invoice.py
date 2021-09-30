@@ -10,6 +10,12 @@ from erpnext.accounts.general_ledger import flt, make_entry
 
 def correct_gl_entry_supplier_discount(doc, method):
     if doc is not None and doc.discount_amount != 0:
+
+        # Build Item accountancy code dict to know what line update into GL Entry
+        item_code_and_net = {}
+        for docline in doc.items:
+            item_code_and_net[docline.expense_account] = docline.net_amount
+
         gl_invoice_entries = frappe.get_list("GL Entry", filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
         if gl_invoice_entries is not None and len(gl_invoice_entries) != 0:
 
@@ -18,9 +24,11 @@ def correct_gl_entry_supplier_discount(doc, method):
             for gl_invoice_entry in gl_invoice_entries:
                 gl_entry = frappe.get_doc('GL Entry', gl_invoice_entry.name)
                 if gl_entry.party_type == "Supplier":
-                    new_supplier_total = gl_entry.credit - doc.discount_amount
-                    gl_entry.db_set('credit', new_supplier_total)
-                    gl_entry.db_set('credit_in_account_currency', new_supplier_total)
+                    gl_entry.db_set('credit', doc.net_total)
+                    gl_entry.db_set('credit_in_account_currency', doc.net_total)
+                elif gl_entry.account in item_code_and_net.keys():
+                    gl_entry.db_set('debit', item_code_and_net[gl_entry.account])
+                    gl_entry.db_set('debit_in_account_currency', item_code_and_net[gl_entry.account])
 
             new_gl_entry = doc.get_gl_dict({
                 "account": doc.get_company_default("discount_supplier_account"),
