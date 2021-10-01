@@ -14,7 +14,7 @@ def correct_gl_entry_supplier_discount(doc, method):
         # Build Item accountancy code dict to know what line update into GL Entry
         item_code_and_net = {}
         for docline in doc.items:
-            item_code_and_net[docline.expense_account] = docline.net_amount
+            item_code_and_net[docline.expense_account] = docline.amount
 
         gl_invoice_entries = frappe.get_list("GL Entry", filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
         if gl_invoice_entries is not None and len(gl_invoice_entries) != 0:
@@ -30,13 +30,13 @@ def correct_gl_entry_supplier_discount(doc, method):
                     gl_entry.db_set('debit', item_code_and_net[gl_entry.account])
                     gl_entry.db_set('debit_in_account_currency', item_code_and_net[gl_entry.account])
 
-            new_gl_entry = doc.get_gl_dict({
-                "account": doc.get_company_default("discount_supplier_account"),
-                "against": doc.supplier_name,
-                "cost_center": doc.get_company_default("cost_center"),
-                "project": doc.get("project"),
-                "remarks": "Supplier Discount",
-                "credit": flt(doc.discount_amount, precision),
-                "is_opening": "No"
-            })
-            make_entry(new_gl_entry, adv_adj=False, update_outstanding='No')
+        new_gl_entry = doc.get_gl_dict({
+            "account": doc.get_company_default("discount_supplier_account"),
+            "against": doc.supplier_name,
+            "cost_center": doc.get_company_default("cost_center"),
+            "project": doc.get("project"),
+            "remarks": "Supplier Discount",
+            "credit": flt(doc.discount_amount, precision),
+            "is_opening": "No"
+        })
+        make_entry(new_gl_entry, adv_adj=False, update_outstanding='No')
