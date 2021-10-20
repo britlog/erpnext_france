@@ -33,3 +33,4 @@ erpnext_france,Included already exported document,Inclure dans l'export les enre
 erpnext_france,Accounting Export Date,Date d'export en comptabilité
 erpnext_france,Set empty to not update "Exported Date" on document,Mettre à vide pour ne pas mettre de date d'export sur les documents
 erpnext_france,Discount Supplier Account,Compte d'escompte et remise fournisseur
+erpnext_france,Row {0}: Invalid Item Tax Template for item {1},Ligne {0}: Taxes et Frais de Vente ne sont pas cohérentes pour l'article {1}
