@@ -13,17 +13,19 @@ def correct_gl_entry_supplier_discount(doc, method):
         discount_account = frappe.get_cached_value('Company', doc.company, "discount_supplier_account")
         if discount_account is not None:
 
+            precision = frappe.get_precision("GL Entry", "debit_in_account_currency")
+
             # Build Item accountancy code dict to know what line update into GL Entry
             item_code_and_net = {}
             for docline in doc.items:
-                item_code_and_net[docline.expense_account] = docline.amount
+                if docline.expense_account in item_code_and_net:
+                    item_code_and_net[docline.expense_account] += flt(docline.amount)
+                else:
+                    item_code_and_net[docline.expense_account] = flt(docline.amount)
 
             gl_invoice_entries = frappe.get_list("GL Entry",
                                                  filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
             if gl_invoice_entries is not None and len(gl_invoice_entries) != 0:
-
-                precision = frappe.get_precision("GL Entry", "debit_in_account_currency")
-
                 for gl_invoice_entry in gl_invoice_entries:
                     gl_entry = frappe.get_doc('GL Entry', gl_invoice_entry.name)
                     if gl_entry.party_type == "Supplier":
