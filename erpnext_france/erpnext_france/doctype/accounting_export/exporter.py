@@ -75,13 +75,13 @@ class DataExporter:
         if self.accounting_document == "Purchase Invoice":
             self.journal_code = frappe.db.get_value("Company", self.company, "buying_journal_code")
             fields_inv = ", pinv.due_date as due_date, pinv.bill_no as orign_no "
-            join_table = " inner join `tabPurchase Invoice` pinv on gl.against_voucher = pinv.name "
+            join_table = " inner join `tabPurchase Invoice` pinv on gl.voucher_no = pinv.name "
             if self.included_already_exported_document == '0':
                 sql_already_exported = " and pinv.accounting_export_date IS NULL "
         elif self.accounting_document == "Sales Invoice":
             self.journal_code = frappe.db.get_value("Company", self.company, "selling_journal_code")
             fields_inv = ",sinv.due_date as due_date, sinv.po_no as orign_no"
-            join_table = " inner join `tabSales Invoice` sinv on gl.against_voucher = sinv.name "
+            join_table = " inner join `tabSales Invoice` sinv on gl.voucher_no = sinv.name "
             if self.included_already_exported_document == '0':
                 sql_already_exported = " and sinv.accounting_export_date IS NULL"
         else:
@@ -114,8 +114,9 @@ class DataExporter:
 			where gl.voucher_type = %(voucher_type)s and gl.posting_date between %(from_date)s and %(to_date)s
 			and acc.account_type not in ("Bank", "Cash") and ifnull(against_acc.account_type, "") not in ("Bank", "Cash")
 			{sql_already_exported}
-            order by gl.voucher_no""".format(sql_already_exported=sql_already_exported, fields_inv=fields_inv,
-                                             join_table=join_table),
+            order by gl.voucher_no, acc.account_number""".format(sql_already_exported=sql_already_exported,
+                                                                 fields_inv=fields_inv,
+                                                                 join_table=join_table),
                                   {"voucher_type": self.accounting_document, "from_date": self.from_date,
                                    "to_date": self.to_date},
                                   as_dict=True)
