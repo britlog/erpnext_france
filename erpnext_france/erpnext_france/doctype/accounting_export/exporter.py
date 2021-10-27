@@ -65,8 +65,9 @@ class DataExporter:
             if export_date is not None and export_date != 'undefined' and doc_type is not None and voucher_no is not None:
                 invoice = frappe.get_doc(doc_type, voucher_no)
                 if invoice is not None:
-                    invoice.accounting_export_date = export_date
-                    invoice.save()
+                    # Use db_set for performance issue
+                    # as it is a custom field created by this app bypass validation Invoice rule is OK
+                    invoice.db_set('accounting_export_date', export_date)
 
         sql_already_exported = ""
 
