@@ -227,7 +227,6 @@ class DataExporter:
         else:
             echeance_date = ''
 
-        print(doc.get("invoice_number"))
         piece_num = '{:.17s}'.format(doc.get("invoice_number").replace("\n", " ").replace("\r", " "))
         compte_num = doc.get("account_number")
         ref_inv = '{:.13s}'.format(doc.get("voucher_no"))
