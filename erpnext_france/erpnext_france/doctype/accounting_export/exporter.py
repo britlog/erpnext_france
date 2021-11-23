@@ -140,13 +140,19 @@ class DataExporter:
                     if doc.voucher_no not in supplier_invoice_supplier_name:
                         supplier_invoice_supplier_name[doc.voucher_no] = doc.supplier_name
                     if doc.voucher_no not in supplier_invoice_number:
-                        supplier_invoice_number[doc.voucher_no] = doc.orign_no
+                        if doc.orign_no is None:
+                            supplier_invoice_number[doc.voucher_no] = doc.voucher_no
+                        else:
+                            supplier_invoice_number[doc.voucher_no] = doc.orign_no
 
                 if doc.against_voucher_type == 'Sales Invoice':
                     if doc.voucher_no not in customer_invoice_customer_name:
                         customer_invoice_customer_name[doc.voucher_no] = doc.customer_name
                     if doc.voucher_no not in customer_invoice_number:
-                        customer_invoice_number[doc.voucher_no] = doc.orign_no
+                        if doc.orign_no is None:
+                            customer_invoice_number[doc.voucher_no] = doc.voucher_no
+                        else:
+                            customer_invoice_number[doc.voucher_no] = doc.orign_no
 
             for doc in self.data:
                 doc.invoice_number = doc.voucher_no
