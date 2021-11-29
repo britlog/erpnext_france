@@ -13,6 +13,7 @@
   "parenttype": null,
   "property": "read_only_onload",
   "property_type": "Check",
+  "row_name": null,
   "value": null
  },
  {
@@ -29,6 +30,7 @@
   "parenttype": null,
   "property": "read_only_onload",
   "property_type": "Check",
+  "row_name": null,
   "value": null
  }
 ]

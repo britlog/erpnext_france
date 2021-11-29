@@ -1,36 +1,37 @@
-erpnext_france,Journal Code,Code Journal
-erpnext_france,Journal Label,Libellé Journal
-erpnext_france,Tax ID,Numéro de TVA Intracommunautaire
-erpnext_france,Accounting Export,Export Comptable
-erpnext_france,Accounting Document,Pièce Comptable
-erpnext_france,From Date,Date de Début
-erpnext_france,To Date,Date de Fin
-erpnext_france,Please select a company,Sélectionnez s'il vous plaît une société
-erpnext_france,Please select an accounting document,Sélectionnez s'il vous plaît une pièce comptable
-erpnext_france,Please enter from date,Entrez s'il vous plaît une date de début
-erpnext_france,Please enter to date,Entrez s'il vous plaît une date de fin
-erpnext_france,Selling Journal Code,Code Journal de Vente
-erpnext_france,Buying Journal Code,Code Journal d'Achat
-erpnext_france,Export File Format,Format du Fichier d'Export
-erpnext_france,Subledger Account,Compte Auxiliaire
-erpnext_france,Deposit Invoice,Facture d'Acompte
-erpnext_france,Select a payment term to invoice.,Sélectionnez un terme de paiement à facturer.
-erpnext_france,Deposit Print Heading,Intitulé d'Impression Acompte
-erpnext_france,ERPNext France Settings,Paramètres de ERPNext France
-erpnext_france,Default Payable Account,Compte fournisseur par défaut
-erpnext_france,Informations sur la fête,Information sur la partie
-erpnext_france,Salutation,Civilité
-erpnext_france,Allow Sales Invoice Creation Without Delivery Note,Autoriser la création de facture sans bon de livraison
-erpnext_france,Allow Sales Invoice Creation Without Sales Order,Autoriser la création de facture sans commandes
-erpnext_france,Type de Référence,Type d’éléments
-erpnext_france,DRAFT,BROUILLON
-erpnext_france,Purchase Order,Commande d'Achat
-erpnext_france,Terminé par,Date d'échéance
-erpnext_france,Default Company Bank Account,Compte bancaire par défaut
-erpnext_france,Purchase demande,Demande d'achat
-erpnext_france,Set Export Date,Enregistrer la date d'export
-erpnext_france,Included already exported document,Inclure dans l'export les enregistrements déja exporté dans l'export
-erpnext_france,Accounting Export Date,Date d'export en comptabilité
-erpnext_france,Set empty to not update "Exported Date" on document,Mettre à vide pour ne pas mettre de date d'export sur les documents
-erpnext_france,Discount Supplier Account,Compte d'escompte et remise fournisseur
-erpnext_france,Row {0}: Invalid Item Tax Template for item {1},Ligne {0}: Taxes et Frais de Vente ne sont pas cohérentes pour l'article {1}
+Journal Code,Code Journal
+Journal Label,Libellé Journal
+Tax ID,Numéro de TVA Intracommunautaire
+Accounting Export,Export Comptable
+Accounting Document,Pièce Comptable
+From Date,Date de Début
+To Date,Date de Fin
+Please select a company,Sélectionnez s'il vous plaît une société
+Please select an accounting document,Sélectionnez s'il vous plaît une pièce comptable
+Please enter from date,Entrez s'il vous plaît une date de début
+Please enter to date,Entrez s'il vous plaît une date de fin
+Selling Journal Code,Code Journal de Vente
+Buying Journal Code,Code Journal d'Achat
+Export File Format,Format du Fichier d'Export
+Subledger Account,Compte Auxiliaire
+Deposit Invoice,Facture d'Acompte
+Select a payment term to invoice.,Sélectionnez un terme de paiement à facturer.
+Deposit Print Heading,Intitulé d'Impression Acompte
+ERPNext France Settings,Paramètres de ERPNext France
+Default Payable Account,Compte fournisseur par défaut
+Informations sur la fête,Information sur la partie
+Salutation,Civilité
+Allow Sales Invoice Creation Without Delivery Note,Autoriser la création de facture sans bon de livraison
+Allow Sales Invoice Creation Without Sales Order,Autoriser la création de facture sans commandes
+Type de Référence,Type d’éléments
+DRAFT,BROUILLON
+Purchase Order,Commande d'Achat
+Terminé par,Date d'échéance
+Default Company Bank Account,Compte bancaire par défaut
+Purchase demande,Demande d'achat
+Set Export Date,Enregistrer la date d'export
+Included already exported document,Inclure dans l'export les enregistrements déja exporté dans l'export
+Accounting Export Date,Date d'export en comptabilité
+Set empty to not update "Exported Date" on document,Mettre à vide pour ne pas mettre de date d'export sur les documents
+Discount Supplier Account,Compte d'escompte et remise fournisseur
+Row {0}: Invalid Item Tax Template for item {1},Ligne {0}: Taxes et Frais de Vente ne sont pas cohérentes pour l'article {1}
+Export Sales Invoice and Purchase Invoice,Export des facture vents et achats

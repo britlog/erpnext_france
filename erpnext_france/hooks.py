@@ -42,6 +42,14 @@ fixtures = [
         ]
     },
     {
+        "dt": ("Workspace"),
+        "filters": [
+            ["name", "in",
+             (' ERPNext France Settings',
+              'ERPNext France Export')]
+        ]
+    },
+    {
         "dt": ("Address Template")
     }
 ]
