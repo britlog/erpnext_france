@@ -86,6 +86,7 @@
     "is_query_report": 0,
     "label": "ERPNext France",
     "link_to": null,
+    "link_type": null,
     "onboard": 0,
     "only_for": null,
     "parent": "ERPNext France Export",
