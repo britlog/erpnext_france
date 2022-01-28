@@ -35,3 +35,5 @@ Set empty to not update "Exported Date" on document,Mettre à vide pour ne pas m
 Discount Supplier Account,Compte d'escompte et remise fournisseur
 Row {0}: Invalid Item Tax Template for item {1},Ligne {0}: Taxes et Frais de Vente ne sont pas cohérentes pour l'article {1}
 Export Sales Invoice and Purchase Invoice,Export des facture vents et achats
+Deposit Invoice,Facture d'Acompte
+Select Payment Term,Sélectionnez un terme de paiement à facturer.
