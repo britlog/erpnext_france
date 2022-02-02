@@ -12,7 +12,7 @@ from frappe.contacts.doctype.address.address import get_company_address
 def get_payment_schedule_query(doctype, txt, searchfield, start, page_len, filters):
     return frappe.db.sql("""select payment_term
 		from `tabPayment Schedule`
-		where parent = '{0}'
+		where parent = '{0}' and payment_term IS NOT NULL
 		""".format(filters.get("parent")))
 
 
