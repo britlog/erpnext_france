@@ -263,4 +263,3 @@ class DataExporter:
                echeance_date]
 
         return row
-
