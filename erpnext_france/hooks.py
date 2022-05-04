@@ -49,9 +49,6 @@ fixtures = [
               'ERPNext France Export')]
         ]
     },
-    {
-        "dt": ("Address Template")
-    }
 ]
 
 # Includes in <head>
