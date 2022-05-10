@@ -45,13 +45,10 @@ fixtures = [
         "dt": ("Workspace"),
         "filters": [
             ["name", "in",
-             (' ERPNext France Settings',
+             ('ERPNext France Settings',
               'ERPNext France Export')]
         ]
     },
-    {
-        "dt": ("Address Template")
-    }
 ]
 
 # Includes in <head>
