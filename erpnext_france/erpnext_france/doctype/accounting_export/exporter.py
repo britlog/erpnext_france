@@ -114,7 +114,7 @@ class DataExporter:
 			where gl.voucher_type = %(voucher_type)s and gl.posting_date between %(from_date)s and %(to_date)s
 			and acc.account_type not in ("Bank", "Cash") and ifnull(against_acc.account_type, "") not in ("Bank", "Cash")
 			{sql_already_exported}
-            order by gl.voucher_no, acc.account_number""".format(sql_already_exported=sql_already_exported,
+            order by gl.posting_date, gl.voucher_no, acc.account_number""".format(sql_already_exported=sql_already_exported,
                                                                  fields_inv=fields_inv,
                                                                  join_table=join_table),
                                   {"voucher_type": self.accounting_document, "from_date": self.from_date,
