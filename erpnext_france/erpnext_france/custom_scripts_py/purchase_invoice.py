@@ -11,6 +11,8 @@ from erpnext.accounts.general_ledger import flt, make_entry
 def correct_gl_entry_supplier_discount(doc, method):
     if doc is not None and doc.discount_amount != 0:
         discount_account = frappe.get_cached_value('Company', doc.company, "discount_supplier_account")
+        round_off = frappe.get_cached_value('Company', doc.company, "round_off_account")
+
         if discount_account is not None:
 
             precision = frappe.get_precision("GL Entry", "debit_in_account_currency")
@@ -22,6 +24,19 @@ def correct_gl_entry_supplier_discount(doc, method):
                     item_code_and_net[docline.expense_account] += flt(docline.amount)
                 else:
                     item_code_and_net[docline.expense_account] = flt(docline.amount)
+
+            # Get Round entry
+            round_off_amount = 0;
+            round_off_amount_currency = 0;
+            if round_off is not None:
+                gl_invoice_entries = frappe.get_list("GL Entry",
+                                                     filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
+                if gl_invoice_entries is not None and len(gl_invoice_entries) != 0:
+                    for gl_invoice_entry in gl_invoice_entries:
+                        gl_entry = frappe.get_doc('GL Entry', gl_invoice_entry.name)
+                        if gl_entry.account == round_off:
+                            round_off_amount += gl_entry.credit
+                            round_off_amount -= gl_entry.debit
 
             gl_invoice_entries = frappe.get_list("GL Entry",
                                                  filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
@@ -41,7 +56,7 @@ def correct_gl_entry_supplier_discount(doc, method):
                 "cost_center": doc.get_company_default("cost_center"),
                 "project": doc.get("project"),
                 "remarks": "Supplier Discount",
-                "credit": flt(doc.discount_amount, precision),
+                "credit": flt(doc.discount_amount - round_off_amount, precision),
                 "is_opening": "No"
             })
             make_entry(new_gl_entry, adv_adj=False, update_outstanding='No')
