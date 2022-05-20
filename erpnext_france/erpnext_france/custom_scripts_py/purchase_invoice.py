@@ -26,8 +26,7 @@ def correct_gl_entry_supplier_discount(doc, method):
                     item_code_and_net[docline.expense_account] = flt(docline.amount)
 
             # Get Round entry
-            round_off_amount = 0;
-            round_off_amount_currency = 0;
+            round_off_amount = 0
             if round_off is not None:
                 gl_invoice_entries = frappe.get_list("GL Entry",
                                                      filters={'voucher_no': doc.name, 'voucher_type': doc.doctype})
