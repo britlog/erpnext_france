@@ -16,22 +16,24 @@ from six import StringIO
 
 @frappe.whitelist()
 def export_data(company=None, accounting_document=None, from_date=None, to_date=None, export_date=None,
-                included_already_exported_document=None):
+                included_already_exported_document=None, export_cancel_doc=None):
     exporter = DataExporter(company=company, accounting_document=accounting_document, from_date=from_date,
                             to_date=to_date, export_date=export_date,
-                            included_already_exported_document=included_already_exported_document)
+                            included_already_exported_document=included_already_exported_document,
+                            export_cancel_doc=export_cancel_doc)
     exporter.build_response()
 
 
 class DataExporter:
     def __init__(self, company=None, accounting_document=None, from_date=None, to_date=None, export_date=None,
-                 included_already_exported_document=None):
+                 included_already_exported_document=None, export_cancel_doc=None):
         self.company = company
         self.accounting_document = accounting_document
         self.from_date = from_date
         self.to_date = to_date
         self.export_date = export_date
         self.included_already_exported_document = included_already_exported_document
+        self.export_cancel_doc = export_cancel_doc
         self.file_format = frappe.db.get_value("Company", self.company, "export_file_format")
 
     def build_response(self):
@@ -70,6 +72,7 @@ class DataExporter:
                     invoice.db_set('accounting_export_date', export_date)
 
         sql_already_exported = ""
+        sql_cancel_invoice = ""
 
         # get journal code and export date
         if self.accounting_document == "Purchase Invoice":
@@ -78,12 +81,16 @@ class DataExporter:
             join_table = " inner join `tabPurchase Invoice` pinv on gl.voucher_no = pinv.name "
             if self.included_already_exported_document == '0':
                 sql_already_exported = " and pinv.accounting_export_date IS NULL "
+            if self.export_cancel_doc == '0':
+                sql_cancel_invoice = " and pinv.status<>'Cancelled'"
         elif self.accounting_document == "Sales Invoice":
             self.journal_code = frappe.db.get_value("Company", self.company, "selling_journal_code")
             fields_inv = ",sinv.due_date as due_date, sinv.po_no as orign_no"
             join_table = " inner join `tabSales Invoice` sinv on gl.voucher_no = sinv.name "
             if self.included_already_exported_document == '0':
                 sql_already_exported = " and sinv.accounting_export_date IS NULL"
+            if self.export_cancel_doc == '0':
+                sql_cancel_invoice = " and sinv.status<>'Cancelled'"
         else:
             self.journal_code = ""
 
@@ -114,7 +121,9 @@ class DataExporter:
 			where gl.voucher_type = %(voucher_type)s and gl.posting_date between %(from_date)s and %(to_date)s
 			and acc.account_type not in ("Bank", "Cash") and ifnull(against_acc.account_type, "") not in ("Bank", "Cash")
 			{sql_already_exported}
-            order by gl.voucher_no, acc.account_number""".format(sql_already_exported=sql_already_exported,
+			{sql_cancel_invoice}
+            order by gl.voucher_no, acc.account_number""".format(sql_cancel_invoice=sql_cancel_invoice,
+                                                                                  sql_already_exported=sql_already_exported,
                                                                  fields_inv=fields_inv,
                                                                  join_table=join_table),
                                   {"voucher_type": self.accounting_document, "from_date": self.from_date,

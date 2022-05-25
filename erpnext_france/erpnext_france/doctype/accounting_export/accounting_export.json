@@ -10,7 +10,8 @@
   "from_date",
   "to_date",
   "export_date",
-  "included_already_exported_document"
+  "included_already_exported_document",
+  "export_cancel_doc"
  ],
  "fields": [
   {
@@ -55,12 +56,18 @@
    "fieldname": "export_date",
    "fieldtype": "Datetime",
    "label": "Export Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "export_cancel_doc",
+   "fieldtype": "Check",
+   "label": "Export Cancel Document"
   }
  ],
  "hide_toolbar": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-11-29 13:15:27.845208",
+ "modified": "2022-05-20 12:07:00.108439",
  "modified_by": "Administrator",
  "module": "ERPNext France",
  "name": "Accounting Export",

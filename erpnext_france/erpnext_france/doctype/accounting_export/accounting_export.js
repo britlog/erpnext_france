@@ -44,6 +44,7 @@ const export_data = frm => {
             to_date: frm.doc.to_date,
             export_date: frm.doc.export_date,
             included_already_exported_document: frm.doc.included_already_exported_document,
+            export_cancel_doc: frm.doc.export_cancel_doc,
         };
     };
 
