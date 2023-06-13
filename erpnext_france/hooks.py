@@ -41,14 +41,6 @@ fixtures = [
               'Mode of Payment Account-read_only_onload')]
         ]
     },
-    {
-        "dt": ("Workspace"),
-        "filters": [
-            ["name", "in",
-             ('ERPNext France Settings',
-              'ERPNext France Export')]
-        ]
-    },
 ]
 
 # Includes in <head>
