@@ -1,0 +1,65 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"kJM9bFBahf\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">ERPNext France</span>\",\"col\":12}},{\"id\":\"Zcz4mFKbxV\",\"type\":\"card\",\"data\":{\"card_name\":\"Exports\",\"col\":4}},{\"id\":\"baFQQb1zVR\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
+ "creation": "2023-06-13 12:41:56.325700",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting-gear",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "ERPNext France",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Exports",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Export Sales Invoice and Purchase Invoice",
+   "link_count": 0,
+   "link_to": "Accounting Export",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ERPNext France Settings",
+   "link_count": 0,
+   "link_to": "ERPNext France Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2023-06-13 12:53:49.164305",
+ "modified_by": "Administrator",
+ "module": "ERPNext France",
+ "name": "ERPNext France",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 8.0,
+ "shortcuts": [],
+ "title": "ERPNext France"
+}
