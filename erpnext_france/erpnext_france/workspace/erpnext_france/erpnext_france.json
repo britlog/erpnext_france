@@ -49,7 +49,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-06-13 12:53:49.164305",
+ "modified": "2023-06-13 13:01:18.639933",
  "modified_by": "Administrator",
  "module": "ERPNext France",
  "name": "ERPNext France",
@@ -59,7 +59,7 @@
  "public": 1,
  "quick_lists": [],
  "roles": [],
- "sequence_id": 8.0,
+ "sequence_id": 9.0,
  "shortcuts": [],
  "title": "ERPNext France"
 }
